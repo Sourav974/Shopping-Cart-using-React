@@ -5,38 +5,82 @@ class Cart extends React.Component {
   constructor() {
     super();
     this.state = {
-      product: [
+      products: [
         {
-          price: 200000,
-          title: "Macbook Pro M1",
+          price: 99,
+          title: "Watch",
           qty: 1,
           img: "",
           id: 1,
         },
         {
-          price: 120000,
-          title: " I phone 13 Pro",
+          price: 999,
+          title: "Mobile Phone",
           qty: 10,
           img: "",
           id: 2,
         },
         {
-          price: 70000,
-          title: " I Pad Pro",
+          price: 999,
+          title: "Laptop",
           qty: 4,
           img: "",
           id: 3,
         },
       ],
     };
+    // this.increaseQuantity = this.increaseQuantity.bind(this);
+    // this.testing();
   }
+  handleIncreaseQuantity = (product) => {
+    console.log("Heyy please inc the qty of ", product);
+    const { products } = this.state;
+    const index = products.indexOf(product);
 
+    products[index].qty += 1;
+
+    this.setState({
+      products,
+    });
+  };
+  handleDecreaseQuantity = (product) => {
+    console.log("Heyy please inc the qty of ", product);
+    const { products } = this.state;
+    const index = products.indexOf(product);
+
+    if (products[index].qty === 0) {
+      return;
+    }
+
+    products[index].qty -= 1;
+
+    this.setState({
+      products,
+    });
+  };
+  handleDeleteProduct = (id) => {
+    const { products } = this.state;
+
+    const items = products.filter((item) => item.id !== id); // [{}]
+
+    this.setState({
+      products: items,
+    });
+  };
   render() {
-    const { product } = this.state;
+    const { products } = this.state;
     return (
       <div className="cart">
-        {product.map((product) => {
-          return <CartItem product={product} key={product.id} />;
+        {products.map((product) => {
+          return (
+            <CartItem
+              product={product}
+              key={product.id}
+              onIncreaseQuantity={this.handleIncreaseQuantity}
+              onDecreaseQuantity={this.handleDecreaseQuantity}
+              onDeleteProduct={this.handleDeleteProduct}
+            />
+          );
         })}
       </div>
     );

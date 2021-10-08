@@ -1,68 +1,40 @@
 import React from "react";
 
 class CartItem extends React.Component {
-  increaseQuantity = () => {
-    console.log(this.state);
-
-    // form 1
-
-    // this.setState({
-    //   qty: this.state.qty + 1,
-    // });
-
-    this.setState((prevState) => {
-      return {
-        qty: prevState.qty + 1,
-      };
-    });
-  };
-
-  decreaseQuantity = () => {
-    const { qty } = this.state;
-
-    if (qty === 0) {
-      return;
-    }
-
-    this.setState((prevState) => {
-      return {
-        qty: prevState.qty - 1,
-      };
-    });
-  };
-
   render() {
     console.log("this.props", this.props);
-
     const { price, title, qty } = this.props.product;
+    const { product, onIncreaseQuantity, onDecreaseQuantity, onDeleteProduct } =
+      this.props;
     return (
       <div className="cart-item">
+        {this.props.jsx}
         <div className="left-block">
           <img style={styles.image} />
         </div>
-
         <div className="right-block">
           <div style={{ fontSize: 25 }}>{title}</div>
-          <div style={{ color: "#777" }}>Rs {price}</div>
-          <div style={{ color: "#777" }}>Qty: {qty}</div>
-          <div className="cart-item-acions">
+          <div style={{ color: "#777" }}>Rs {price} </div>
+          <div style={{ color: "#777" }}>Qty: {qty} </div>
+          <div className="cart-item-actions">
             {/* Buttons */}
             <img
               alt="increase"
               className="action-icons"
-              src="https://as2.ftcdn.net/v2/jpg/03/22/32/37/1000_F_322323723_HJb8d1u2NuI8dMAjvC62TXbSqn63vpI3.jpg"
-              onClick={this.increaseQuantity}
+              src="https://image.flaticon.com/icons/svg/992/992651.svg"
+              onClick={() => onIncreaseQuantity(product)}
             />
             <img
               alt="decrease"
               className="action-icons"
-              src="https://cdn-icons-png.flaticon.com/512/992/992683.png"
-              onClick={this.decreaseQuantity}
+              src="https://image.flaticon.com/icons/svg/1665/1665612.svg"
+              onClick={() => onDecreaseQuantity(product)}
             />
             <img
               alt="delete"
               className="action-icons"
-              src="https://as2.ftcdn.net/v2/jpg/01/90/89/15/500_F_190891550_N7uKp2aHE3mOc20dmtDytj7atgvbhdOu.jpg"
+              src="https://image.flaticon.com/icons/svg/1214/1214428.svg"
+              onClick={() => onDeleteProduct(product.id)}
             />
           </div>
         </div>
@@ -76,6 +48,7 @@ const styles = {
     height: 110,
     width: 110,
     borderRadius: 4,
+    background: "#ccc",
   },
 };
 
